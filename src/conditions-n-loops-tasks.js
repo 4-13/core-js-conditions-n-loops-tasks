@@ -456,8 +456,64 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  if (number < 10) return number;
+
+  const digits = [];
+  let temp = number;
+
+  while (temp > 0) {
+    digits.push(temp % 10);
+    temp = Math.floor(temp / 10);
+  }
+
+  digits.reverse();
+
+  let swapIndex;
+
+  for (let i = digits.length - 1; i > 1; i -= 1) {
+    const prev = digits[i - 1];
+    const last = digits[i];
+    if (prev < last) {
+      swapIndex = i - 1;
+      break;
+    }
+  }
+
+  let nearestGreaterValueIndexAfterSwapIndex = swapIndex + 1;
+
+  for (let i = swapIndex + 1; i < digits.length; i += 1) {
+    const current = digits[i];
+    if (
+      current > digits[swapIndex] &&
+      current < digits[nearestGreaterValueIndexAfterSwapIndex]
+    ) {
+      nearestGreaterValueIndexAfterSwapIndex = i;
+    }
+  }
+
+  [digits[swapIndex], digits[nearestGreaterValueIndexAfterSwapIndex]] = [
+    digits[nearestGreaterValueIndexAfterSwapIndex],
+    digits[swapIndex],
+  ];
+
+  let isSwapped = true;
+
+  while (isSwapped) {
+    isSwapped = false;
+    for (let i = swapIndex + 1; i < digits.length - 1; i += 1) {
+      const current = digits[i];
+      const next = digits[i + 1];
+      if (current > next) {
+        [digits[i], digits[i + 1]] = [digits[i + 1], digits[i]];
+        isSwapped = true;
+      }
+    }
+  }
+
+  return digits.reduce((acc, current, i, arr) => {
+    return acc + current * 10 ** (arr.length - 1 - i);
+  }, 0);
 }
 
 module.exports = {
