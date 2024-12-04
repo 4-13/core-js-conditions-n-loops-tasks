@@ -390,8 +390,19 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const copy = matrix;
+  const matrixClone = structuredClone(matrix);
+  const rowsAmount = matrix.length;
+  const colsAmount = matrix[0].length;
+
+  for (let i = 0; i < rowsAmount; i += 1) {
+    for (let k = 0; k < colsAmount; k += 1) {
+      copy[k][i] = matrixClone[rowsAmount - i - 1][k];
+    }
+  }
+
+  return copy;
 }
 
 /**
