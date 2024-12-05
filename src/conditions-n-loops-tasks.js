@@ -433,12 +433,13 @@ function sortByAsc(arr) {
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
 function shuffleChar(str, iterations) {
-  if (iterations === 0) {
-    return str;
-  }
+  if (iterations === 0) return str;
+  const { length } = str;
+  const effectiveIterations = Math.min(iterations, length);
+
   let temp = str;
 
-  for (let iteration = 0; iteration < iterations; iteration += 1) {
+  for (let iteration = 0; iteration < effectiveIterations; iteration += 1) {
     let oddStr = '';
     let evenStr = '';
 
@@ -450,9 +451,8 @@ function shuffleChar(str, iterations) {
       }
     }
 
-    temp = `${evenStr}${oddStr}`;
+    temp = evenStr + oddStr;
   }
-
   return temp;
 }
 
