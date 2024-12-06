@@ -372,7 +372,16 @@ function getSpiralMatrix(/* size */) {
  */
 function rotateMatrix(matrix) {
   const copy = matrix;
-  const matrixClone = structuredClone(matrix);
+
+  const matrixClone = [];
+  for (let i = 0; i < matrix.length; i += 1) {
+    const row = [];
+    for (let j = 0; j < matrix[i].length; j += 1) {
+      row[j] = matrix[i][j];
+    }
+    matrixClone[i] = row;
+  }
+
   const rowsAmount = matrix.length;
   const colsAmount = matrix[0].length;
 
